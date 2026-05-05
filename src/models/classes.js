@@ -1,43 +1,20 @@
-class Movie {
-    constructor(name, genre, year, director, sinopse, nota){
-        this.name = name;
-        this.genre = genre;
-        this.year = year;
-        this.director = director;
-        this.sinopse = sinopse;
-        this.nota = nota;
-    };
-    get(){
-        return this.name, this.genre, this.year,
-         this.director, this.sinopse, this.nota
-    };
+export class Movie {
+  constructor(data) {           // recebe o objeto JSON inteiro
+    this.name = data.title;
+    this.genre = data.genre_ids;
+    this.year = data.release_date;
+    this.sinopse = data.overview;
+    this.nota = data.vote_average;
+  }
 }
 
-class Series {
-    constructor(name, genre, year, director, sinopse, nota, temporadas){
-        this.name = name;
-        this.genre = genre;
-        this.year = year;
-        this.director = director;
-        this.sinopse = sinopse;
-        this.nota = nota;
-        this.temporadas = temporadas;
-    }
-    get(){
-        return this.name, this.genre, this.year,
-         this.director, this.sinopse, this.nota, this.temporadas
-    }
+export class TvShow {
+  constructor(data) {
+    this.name = data.name;
+    this.genre = data.genre_ids;
+    this.year = data.first_air_date;
+    this.sinopse = data.overview;
+    this.nota = data.vote_average;
+    this.temporadas = data.number_of_seasons;
+  }
 }
-/*Model: Recebe os dados da API e
- instancia objetos a partir das classes
- que organizam os dados
-
- Controller: recebe entrada do usuário e decide 
- qual ação será tomada, também recebe dados do model que serão usados pelo view, atuandio como ponte
- 
- View:Organiza funções que definem oque será impresso no terminal
- 
- 
- 
- 
- */
