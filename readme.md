@@ -1,6 +1,6 @@
-# 🎬 CineSearch
+# 🎬 CineSearch API
 
-Uma aplicação full-stack para descobrir e buscar filmes e séries, utilizando a [API do TMDB](https://developer.themoviedb.org/). Desenvolvida com uma API REST em Node.js/Express no backend e React no frontend.
+Uma API REST para descobrir e buscar filmes e séries, utilizando a [API do TMDB](https://developer.themoviedb.org/) como fonte de dados. Desenvolvida com Node.js e Express, seguindo a arquitetura MVC.
 
 ---
 
@@ -12,17 +12,14 @@ Uma aplicação full-stack para descobrir e buscar filmes e séries, utilizando 
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Como Executar](#como-executar)
 - [Variáveis de Ambiente](#variáveis-de-ambiente)
-- [Endpoints da API](#endpoints-da-api)
-- [Frontend](#frontend)
+- [Endpoints](#endpoints)
 - [Licença](#licença)
 
 ---
 
 ## Visão Geral
 
-O CineSearch permite que usuários explorem filmes e séries populares, filtrem resultados por gênero, ano e avaliação, e busquem por título — tudo através de uma interface limpa e responsiva.
-
-O backend funciona como uma camada intermediária entre o frontend e a API do TMDB, mantendo o token de autenticação seguro no servidor e centralizando a lógica de formatação dos dados.
+A CineSearch API funciona como uma camada intermediária entre o cliente e a API do TMDB, mantendo o token de autenticação seguro no servidor, centralizando a lógica de filtragem e formatando os dados antes de devolvê-los ao consumidor.
 
 ---
 
@@ -31,47 +28,31 @@ O backend funciona como uma camada intermediária entre o frontend e a API do TM
 - 🎥 Listagem de filmes e séries populares
 - 🔍 Busca por título
 - 🎛️ Filtros por gênero, ano de lançamento e avaliação mínima
-- 📄 Visualização detalhada de cada título
-- 📱 Interface React responsiva
-- 🔒 Token da API mantido no servidor
+- 🔒 Token da API do TMDB mantido no servidor
 
 ---
 
 ## Tecnologias
 
-**Backend**
 - Node.js
 - Express
 - API do TMDB
-
-**Frontend**
-- React
-- Vite
 
 ---
 
 ## Estrutura do Projeto
 
 ```
-movie-search-cli/
-├── src/
-│   ├── models/
-│   │   ├── apiClient.js       # Lógica de fetch e comunicação com o TMDB
-│   │   ├── Movie.js           # Classe Movie
-│   │   └── TvShow.js          # Classe TvShow
-│   ├── controller/
-│   │   └── controller.js      # Handlers das rotas e lógica de filtros
-│   ├── routes/
-│   │   └── routes.js          # Definição das rotas Express
-│   └── server.js              # Configuração do servidor Express
-├── client/
-│   └── src/
-│       ├── components/        # Componentes React
-│       └── App.jsx
-├── .env
-├── .gitignore
-├── package.json
-└── README.md
+src/
+├── models/
+│   ├── apiClient.js       # Lógica de fetch e comunicação com o TMDB
+│   ├── Movie.js           # Classe Movie
+│   └── TvShow.js          # Classe TvShow
+├── controller/
+│   └── controller.js      # Handlers das rotas e lógica de filtros
+├── routes/
+│   └── routes.js          # Definição das rotas Express
+└── server.js              # Configuração do servidor
 ```
 
 ---
@@ -87,25 +68,17 @@ movie-search-cli/
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/cinesearch.git
-cd cinesearch
+git clone https://github.com/seu-usuario/cinesearch-api.git
+cd cinesearch-api
 
-# Instale as dependências do backend
-npm install
-
-# Instale as dependências do frontend
-cd client
+# Instale as dependências
 npm install
 ```
 
-### Executando o projeto
+### Executando o servidor
 
 ```bash
-# Inicie o backend (a partir da raiz)
 node --env-file=.env src/server.js
-
-# Inicie o frontend (a partir de /client)
-npm run dev
 ```
 
 ---
@@ -123,7 +96,7 @@ PORT=3000
 
 ---
 
-## Endpoints da API
+## Endpoints
 
 ### Filmes
 
@@ -154,23 +127,7 @@ PORT=3000
 ```
 GET /movies?language=pt-BR&with_genres=28&vote_average=7&year=2023
 GET /movies/search?query=parasita
+GET /tv?language=pt-BR&vote_average=8
+GET /tv/search?query=breaking+bad
 ```
 
----
-
-## Frontend
-
-O frontend foi desenvolvido com React e Vite. Ele se comunica exclusivamente com a API Express interna, nunca diretamente com o TMDB.
-
-Principais componentes:
-
-- `SearchBar` — campo de busca por título
-- `FilterPanel` — filtros de gênero, ano e avaliação
-- `MediaList` — renderiza o grid de resultados
-- `MediaCard` — exibe as informações de cada filme ou série
-
----
-
-## Licença
-
-Licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
