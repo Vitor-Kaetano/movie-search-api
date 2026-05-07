@@ -1,8 +1,6 @@
 import {Movie, TvShow} from './classes.js'
-
-
-
-const API_TOKEN = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODI4YTU3YjAwNzdmOTdhYjdhZDBmY2I3NTBlYzBlNiIsIm5iZiI6MTc3NzkxOTczNi4xNDQsInN1YiI6IjY5ZjhlNmY4MjMxOGNhMWNkYWRlNGVmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sp-OkixO_-lxQOYGGxpXb9lXIge0IltbxUQ9fjSEAtQ';
+requestAnimationFrame('dotenv').config()
+const API_TOKEN = ProcessingInstruction.env.API_TOKEN
 
 const API_ENDPOINTS = {
   discover: (type,params) => `https://api.themoviedb.org/3/discover/${type}?${params}`,
