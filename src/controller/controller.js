@@ -1,37 +1,55 @@
-import {list,search} from '../models/apiClient.js'
-import {displayMovies, displayTvShows} from '../view/UI.js'
+import { list, search } from '../models/apiClient.js'
 
-//Definir qual função chamar de model
-//receber o array de objetos de model
-//chamar uma função de view para imprimir os dados na tela
-
-//receber parametros de filtragem e passar os parâmetros para o model
-
-function filters({language, with_genres, vote_average,year}){
-    const params ={}
-    
-    if(language) params.language = language;
-    if(with_genres) params.with_genres = with_genres;
-    if(vote_average) params.vote_average = vote_average;
-    if(year) params.year = year;
-    
-    return params;
-    }
-
-
-
-
-async function main(){
-    const collectedFilters = {
-        language: 'en-US'
-    }
-    const type = 'tv'
-    const query = "pluribus"
-    //displayMovies(await list(type, filters(collectedFilters)))
-    //displayMovies(await search(type,query,filters(collectedFilters)))
-    displayTvShows(await list(type, filters(collectedFilters)));
-    displayTvShows(await search(type, query,filters(collectedFilters)));
+function extractFilters(query) {
+  const { language, with_genres, vote_average, year } = query
+  const filters = {}
+  if (language) filters.language = language
+  if (with_genres) filters.with_genres = with_genres
+  if (vote_average) filters.vote_average = vote_average
+  if (year) filters.year = year
+  return filters
 }
-main()
 
+export async function getMovies(req, res) {
+  try {
+    const filters = extractFilters(req.query)
+    const results = await list('movie', filters)
+    res.json(results)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+}
 
+export async function searchMovies(req, res) {
+  const q = req.query.query
+  if (!q) return res.status(400).json({ error: 'Missing query parameter' })
+  try {
+    const filters = extractFilters(req.query)
+    const results = await search('movie', q, filters)
+    res.json(results)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+}
+
+export async function getTvShows(req, res) {
+  try {
+    const filters = extractFilters(req.query)
+    const results = await list('tv', filters)
+    res.json(results)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+}
+
+export async function searchTvShows(req, res) {
+  const q = req.query.query
+  if (!q) return res.status(400).json({ error: 'Missing query parameter' })
+  try {
+    const filters = extractFilters(req.query)
+    const results = await search('tv', q, filters)
+    res.json(results)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+}
